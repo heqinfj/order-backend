@@ -1,6 +1,13 @@
 buildscript {
     repositories {
+        maven {
+		  url 'https://maven.aliyun.com/repository/public/'
+		}
         maven { url "https://maven.aliyun.com/repository/central" }
+		maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+		maven { url "https://maven.aliyun.com/repository/central" }
+		mavenLocal()
+		mavenCentral()
     }
     dependencies {
         classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.1"
@@ -17,7 +24,12 @@ plugins {
 }
 
 repositories {
+    maven {
+	  url 'https://maven.aliyun.com/repository/public/'
+	}
     maven { url "https://maven.aliyun.com/repository/central" }
+	mavenLocal()
+	mavenCentral()
 }
 
 application {
