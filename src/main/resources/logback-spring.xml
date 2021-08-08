@@ -9,9 +9,25 @@
         </encoder>
     </appender>
 
+    <!--
+        注意 REDIS appender定义的位置需要在被引用之前就需要定义好了
+        ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [REDIS]. Did you define it below instead of above in the configuration file?
+        ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+       -->
+    <appender name="REDIS" class="com.cwbase.logback.RedisAppender">
+        <tags>ecommerce-order-backend-${ACTIVE_PROFILE}</tags>
+        <host>proxy.heqin.aliyun.com</host>
+        <port>6379</port>
+        <password>test</password>
+        <key>ecommerce-ordder-log</key>
+        <mdc>true</mdc>
+        <type>redis</type>
+    </appender>
+
     <springProfile name="local,ci">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="REDIS"/>
         </root>
     </springProfile>
 
@@ -26,16 +42,6 @@
                 <maxHistory>90</maxHistory>
                 <totalSizeCap>10GB</totalSizeCap>
             </rollingPolicy>
-        </appender>
-
-        <appender name="REDIS" class="com.cwbase.logback.RedisAppender">
-            <tags>ecommerce-order-backend-${ACTIVE_PROFILE}</tags>
-            <host>elk.yourdomain.com</host>
-            <port>6379</port>
-            <password>whatever</password>
-            <key>ecommerce-ordder-log</key>
-            <mdc>true</mdc>
-            <type>redis</type>
         </appender>
 
         <root level="INFO">
